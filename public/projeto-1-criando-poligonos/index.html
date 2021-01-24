@@ -155,12 +155,39 @@
         mat4.identity(mMatrix);
         mat4.identity(vMatrix);
 
-        // Desenhando Triângulo
         var translation = vec3.create();
 
-        vec3.set(translation, -2, 1.0, -7.0);
+
+        vec3.set(translation, -6.25, 3.7, -10.0);
         mat4.translate(mMatrix, mMatrix, translation);
 
+        
+
+
+        for (let i = 0; i < 4; i++) {
+          vec3.set(translation, 2.4, 0, 0);
+          mat4.translate(mMatrix, mMatrix, translation);
+          desenharTriangulo();
+
+          vec3.set(translation, 2.4, 0, 0);
+          mat4.translate(mMatrix, mMatrix, translation);
+          desenharQuadrado();
+
+          vec3.set(translation, 2.4, 0, 0);
+          mat4.translate(mMatrix, mMatrix, translation);
+          desenharTriangulo();
+
+          vec3.set(translation, 2.4, 0, 0);
+          mat4.translate(mMatrix, mMatrix, translation);
+          desenharQuadrado();
+
+
+          vec3.set(translation, -4*2.4, -2.5, 0);
+          mat4.translate(mMatrix, mMatrix, translation);
+        }
+      }
+
+      function desenharTriangulo() {
         gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
         gl.vertexAttribPointer(
           shaderProgram.vertexPositionAttribute,
@@ -173,10 +200,9 @@
 
         setMatrixUniforms();
         gl.drawArrays(gl.TRIANGLES, 0, triangleVertexPositionBuffer.numItems);
+      }
 
-        // Desenhando o Quadrado
-        vec3.set(translation, 3.0, -0.0, 0.0);
-        mat4.translate(mMatrix, mMatrix, translation);
+      function desenharQuadrado() {
         gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
         gl.vertexAttribPointer(
           shaderProgram.vertexPositionAttribute,
@@ -186,6 +212,8 @@
           0,
           0
         );
+
+
         setMatrixUniforms();
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, squareVertexPositionBuffer.numItems);
       }
