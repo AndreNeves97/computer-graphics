@@ -1,15 +1,4 @@
-# [en] Computer graphics
-
-Projects of the computer graphics class - Computer Engineering course
-
-<br>
-
-## Website link
-
-https://andreneves97.github.io/computer-graphics/
-
-
-# [pt-br] Computação gráfica
+# Computação gráfica
 
 Projetos da disciplina de computação gráfica - Curso de Engenharia de Computação
 
@@ -19,3 +8,12 @@ Projetos da disciplina de computação gráfica - Curso de Engenharia de Computa
 ## Link do site
 
 https://andreneves97.github.io/computer-graphics/
+
+
+<br>
+
+# Projeto 1 - Desenhando uma figura com formas geométricas
+
+Figura escolhida:
+
+![](public/projeto-1-criando-poligonos/figure.png)

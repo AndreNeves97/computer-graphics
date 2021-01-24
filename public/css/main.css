@@ -11,6 +11,20 @@ body {
   background-color: #EEEEEE;
 }
 
+h1 {
+  text-align: center;
+  font-size: 2.2em;
+  font-weight: 400;
+  margin: 0.3em;
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.7em;
+  font-weight: 300;
+  margin: 0;
+}
+
 .wrapper {
   min-height: 100vh;
   padding: 30px 0;
@@ -19,7 +33,7 @@ body {
   justify-content: center;
 }
 
-.container {
+.projects .container {
   min-width: min(90vw, 900px);
   max-width: calc(100vw - 60px);
   max-height: calc(100% - 60px);
@@ -29,19 +43,6 @@ body {
   padding: 10px;
 }
 
-.projects h1 {
-  text-align: center;
-  font-size: 2.2em;
-  font-weight: 400;
-  margin: 0.3em;
-}
-
-.projects h2 {
-  text-align: center;
-  font-size: 1.7em;
-  font-weight: 300;
-  margin: 0;
-}
 
 ul.projects-list {
   list-style: none;
@@ -98,4 +99,21 @@ ul.projects-list li span {
   ul.projects-list li {
     margin: 0 10px;
   }
+}
+
+
+
+
+
+.project {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.project .project-container {
+  margin-top: 2em;
+
+  display: flex;
+  flex-direction: column;
 }
