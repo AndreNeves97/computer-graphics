@@ -151,15 +151,17 @@ function drawBufferObject(
     0
   );
 
-  gl.bindBuffer(gl.ARRAY_BUFFER, colorBufferObject);
-  gl.vertexAttribPointer(
-    shaderProgram.vertexColorAttribute,
-    colorBufferObject.itemSize,
-    gl.FLOAT,
-    false,
-    0,
-    0
-  );
+  if (!!colorBufferObject) {
+    gl.bindBuffer(gl.ARRAY_BUFFER, colorBufferObject);
+    gl.vertexAttribPointer(
+      shaderProgram.vertexColorAttribute,
+      colorBufferObject.itemSize,
+      gl.FLOAT,
+      false,
+      0,
+      0
+    );
+  }
 
   setMatrixUniforms();
   gl.drawArrays(mode, 0, positionBufferObject.numItems);
