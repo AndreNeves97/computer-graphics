@@ -1,5 +1,3 @@
-setTimeout(() => location.reload(), 1000);
-
 let triangleVertexPositionBuffer;
 let squareVertexPositionBuffer;
 
