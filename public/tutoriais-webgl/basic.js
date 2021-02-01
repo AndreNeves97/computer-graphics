@@ -45,6 +45,16 @@ function iniciarShaders() {
   );
   gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
 
+  // Cores
+  shaderProgram.vertexColorAttribute = gl.getAttribLocation(
+    shaderProgram,
+    "aVertexColor"
+  );
+
+  if (shaderProgram.vertexColorAttribute != -1) {
+    gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);
+  }
+
   shaderProgram.pMatrixUniform = gl.getUniformLocation(
     shaderProgram,
     "uPMatrix"
@@ -117,16 +127,34 @@ function prepareScene() {
     45,
     gl.viewportWidth / gl.viewportHeight,
     0.1,
-    100.0
+    100.0,
+    pMatrix
   );
+
+  mat4.identity(mMatrix);
+  mat4.identity(vMatrix);
 }
 
 // eslint-disable-next-line no-unused-vars
-function drawBufferObject(bufferObject, mode = gl.TRIANGLE_STRIP) {
-  gl.bindBuffer(gl.ARRAY_BUFFER, bufferObject);
+function drawBufferObject(
+  positionBufferObject,
+  colorBufferObject,
+  mode = gl.TRIANGLE_STRIP
+) {
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBufferObject);
   gl.vertexAttribPointer(
     shaderProgram.vertexPositionAttribute,
-    bufferObject.itemSize,
+    positionBufferObject.itemSize,
+    gl.FLOAT,
+    false,
+    0,
+    0
+  );
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, colorBufferObject);
+  gl.vertexAttribPointer(
+    shaderProgram.vertexColorAttribute,
+    colorBufferObject.itemSize,
     gl.FLOAT,
     false,
     0,
@@ -134,7 +162,7 @@ function drawBufferObject(bufferObject, mode = gl.TRIANGLE_STRIP) {
   );
 
   setMatrixUniforms();
-  gl.drawArrays(mode, 0, bufferObject.numItems);
+  gl.drawArrays(mode, 0, positionBufferObject.numItems);
 }
 
 function setMatrixUniforms() {
