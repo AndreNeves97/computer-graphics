@@ -172,3 +172,23 @@ function setMatrixUniforms() {
   gl.uniformMatrix4fv(shaderProgram.vMatrixUniform, false, vMatrix);
   gl.uniformMatrix4fv(shaderProgram.mMatrixUniform, false, mMatrix);
 }
+
+let mMatrixPilha = [];
+// eslint-disable-next-line no-unused-vars
+function mPushMatrix() {
+  var copy = mat4.clone(mMatrix);
+  mMatrixPilha.push(copy);
+}
+
+// eslint-disable-next-line no-unused-vars
+function mPopMatrix() {
+  if (mMatrixPilha.length == 0) {
+    throw "inválido popMatrix!";
+  }
+  mMatrix = mMatrixPilha.pop();
+}
+
+// eslint-disable-next-line no-unused-vars
+function degToRad(graus) {
+  return (graus * Math.PI) / 180;
+}
