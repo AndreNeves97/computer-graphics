@@ -1,0 +1,24 @@
+{
+  "name": "computer-graphics",
+  "version": "1.0.0",
+  "description": "Projetos da disciplina de computação gráfica - Curso de Engenharia de Computação",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreNeves97/computer-graphics.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndreNeves97/computer-graphics/issues"
+  },
+  "homepage": "https://github.com/AndreNeves97/computer-graphics#readme",
+  "devDependencies": {
+    "eslint": "^7.19.0",
+    "eslint-config-prettier": "^7.2.0"
+  }
+}

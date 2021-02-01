@@ -1,0 +1,41 @@
+{
+  "extends": [],
+  "plugins": [],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "globals": {
+    "$": false,
+    "gl": false,
+    "shaderProgram": false,
+    "vec3": false,
+    "mat4": false,
+    "angular": false,
+    "Blob": false,
+    "compareTwoStrings": false,
+    "document": false,
+    "FB": false,
+    "lf": false,
+    "localStorage": false,
+    "moment": false,
+    "navigator": false,
+    "PouchDB": false,
+    "recognition": false,
+    "screen": false,
+    "squel": false,
+    "URL": false,
+    "window": false,
+    "element": false,
+    "browser": false
+  },
+  "rules": {
+    "no-undef": 1,
+    "no-unused-vars": 1,
+    "no-redeclare": "error"
+  }
+}
