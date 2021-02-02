@@ -59,7 +59,7 @@ function desenharCena() {
 
 function desenharPiramide() {
   mPushMatrix();
-  mat4.rotate(mMatrix, mMatrix, degToRad(rPiramide), [0, 1, 0]);
+  mat4.rotate(mMatrix, mMatrix, degToRad(rPiramide), [0, 1, 0.5]);
 
   drawBufferObject(piramideVertexPositionBuffer, piramideVertexColorBuffer);
 
@@ -115,6 +115,10 @@ function createPiramide() {
     [0, 1, 0],
     [-1, -1, -1],
     [-1, -1, 1],
+
+    // Baixo
+    [1, -1, -1],
+    [1, -1, 1],
   ]);
 
   piramideVertexColorBuffer = createBuffer([
@@ -136,7 +140,11 @@ function createPiramide() {
     // Esquerda
     [1, 0, 0, 1],
     [0, 0, 1, 1],
-    [0, 1, 0, 1],
+    [1, 0, 0, 1],
+
+    // Baixo
+    [1, 1, 1, 1],
+    [1, 1, 1, 1],
   ]);
 }
 
