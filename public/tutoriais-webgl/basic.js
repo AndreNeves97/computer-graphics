@@ -120,6 +120,23 @@ function createBuffer(vertexMatrix) {
 }
 
 // eslint-disable-next-line no-unused-vars
+function createIndexBuffer(vertexMatrix) {
+  const buffer = gl.createBuffer();
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffer);
+
+  gl.bufferData(
+    gl.ELEMENT_ARRAY_BUFFER,
+    new Uint16Array(vertexMatrix.flat()),
+    gl.STATIC_DRAW
+  );
+
+  buffer.numItems = vertexMatrix.length;
+  buffer.itemSize = vertexMatrix[0].length;
+
+  return buffer;
+}
+
+// eslint-disable-next-line no-unused-vars
 function prepareScene() {
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   mat4.perspective(
@@ -139,6 +156,7 @@ function prepareScene() {
 function drawBufferObject(
   positionBufferObject,
   colorBufferObject,
+  indexBufferObject = null,
   mode = gl.TRIANGLE_STRIP
 ) {
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBufferObject);
@@ -164,6 +182,13 @@ function drawBufferObject(
   }
 
   setMatrixUniforms();
+
+  if (!!indexBufferObject) {
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBufferObject);
+    gl.drawElements(mode, indexBufferObject.numItems, gl.UNSIGNED_SHORT, 0);
+    return;
+  }
+
   gl.drawArrays(mode, 0, positionBufferObject.numItems);
 }
 

@@ -16,6 +16,7 @@
     "vec3": false,
     "mat4": false,
     "createBuffer": false,
+    "createIndexBuffer": false,
     "prepareScene": false,
     "drawBufferObject": false,
     "mMatrix": false,
