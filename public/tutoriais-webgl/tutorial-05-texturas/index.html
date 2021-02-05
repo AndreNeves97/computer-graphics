@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+      
+    <title>Computação gráfica - André Neves. Tutorial 04: Desenhando poliedros</title>
+    <link rel='stylesheet' type='text/css' href='../../css/main.css'>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.4.0/gl-matrix-min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+    <script type="text/javascript" src="../../js/webgl-utils.js"></script>
+
+    <script src="../basic.js"></script>  
+    <script src="./script.js"></script>    
+    <script src="./cube.js"></script>    
+
+    <script id="shader-vs" type="x-shader/x-vertex">
+      attribute vec3 aVertexPosition;
+            
+      attribute vec4 aVertexColor;
+
+      uniform mat4 uMMatrix;
+      uniform mat4 uVMatrix;
+      uniform mat4 uPMatrix;
+
+
+      varying vec4 vColor;
+
+      void main(void)
+      {
+        gl_Position = uPMatrix * uVMatrix * uMMatrix * vec4(aVertexPosition, 1.0);
+        vColor = aVertexColor;
+      }
+    </script>
+
+    <script id="shader-fs" type="x-shader/x-fragment">
+      precision mediump float;
+      varying vec4 vColor;
+      
+      void main(void)
+      {
+        gl_FragColor = vColor;
+      }
+    </script>
+
+  </head>
+  <body>
+
+    <div class="wrapper">
+      <section class="project">
+        <h1>04 - Desenhando poliedros</h1>
+        <h2>Continuação do tutorial 3, com o objetivo de transformar polígonos (2d) em poliedros (3d)</h2>
+
+        <div class="project-container">
+          <canvas id="canvas-webgl" 
+            width="500px" 
+            height="500px" 
+            style="border:none">
+          </canvas>
+        </div>
+      </section>
+    </div>
+
+  </body>
+</html> 
