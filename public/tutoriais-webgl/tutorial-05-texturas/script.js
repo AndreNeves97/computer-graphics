@@ -48,7 +48,8 @@ function desenharCubo() {
     cuboVertexIndexBuffer,
     gl.TRIANGLES,
     cuboVertexTextureCoordBuffer,
-    [caixaTextura]
+    [caixaTextura],
+    0
   );
 }
 

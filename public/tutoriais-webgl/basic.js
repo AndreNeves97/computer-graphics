@@ -168,7 +168,8 @@ function drawBufferObject(
   indexBufferObject = null,
   mode = gl.TRIANGLE_STRIP,
   textureBufferObject = null,
-  textures
+  textures,
+  textureIndex = 0
 ) {
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBufferObject);
   gl.vertexAttribPointer(
@@ -205,7 +206,7 @@ function drawBufferObject(
 
     if (!!textures) {
       gl.activeTexture(gl.TEXTURE0);
-      gl.bindTexture(gl.TEXTURE_2D, textures[0]);
+      gl.bindTexture(gl.TEXTURE_2D, textures[textureIndex]);
       gl.uniform1i(shaderProgram.samplerUniform, 0);
     }
   }
