@@ -55,6 +55,15 @@ function iniciarShaders() {
     gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);
   }
 
+  // Texturas
+  shaderProgram.vertexTextureCoordAttribute = gl.getAttribLocation(
+    shaderProgram,
+    "aTextureCoord"
+  );
+  if (shaderProgram.vertexTextureCoordAttribute != -1) {
+    gl.enableVertexAttribArray(shaderProgram.vertexTextureCoordAttribute);
+  }
+
   shaderProgram.pMatrixUniform = gl.getUniformLocation(
     shaderProgram,
     "uPMatrix"
@@ -157,7 +166,9 @@ function drawBufferObject(
   positionBufferObject,
   colorBufferObject,
   indexBufferObject = null,
-  mode = gl.TRIANGLE_STRIP
+  mode = gl.TRIANGLE_STRIP,
+  textureBufferObject = null,
+  textures
 ) {
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBufferObject);
   gl.vertexAttribPointer(
@@ -179,6 +190,24 @@ function drawBufferObject(
       0,
       0
     );
+  }
+
+  if (!!textureBufferObject) {
+    gl.bindBuffer(gl.ARRAY_BUFFER, textureBufferObject);
+    gl.vertexAttribPointer(
+      shaderProgram.vertexTextureCoordAttribute,
+      textureBufferObject.itemSize,
+      gl.FLOAT,
+      false,
+      0,
+      0
+    );
+
+    if (!!textures) {
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, textures[0]);
+      gl.uniform1i(shaderProgram.samplerUniform, 0);
+    }
   }
 
   setMatrixUniforms();

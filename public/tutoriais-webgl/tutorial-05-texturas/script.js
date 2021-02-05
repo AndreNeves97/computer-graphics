@@ -1,15 +1,17 @@
 let cuboVertexPositionBuffer;
-let cuboVertexColorBuffer;
-
 let cuboVertexIndexBuffer;
+var cuboVertexTextureCoordBuffer;
 
-let rCubo = 0;
+var caixaTextura;
+
+var xRot = 0;
+var yRot = 0;
+var zRot = 0;
 
 document.addEventListener("afterPrepareWebGl", () => {
   iniciarAmbiente();
   createCubo();
-
-  // iniciarTextura();
+  iniciarTextura();
 
   tick();
 });
@@ -27,41 +29,27 @@ function tick() {
 }
 
 function desenharCena() {
-  mat4.translate(mMatrix, mMatrix, [-9, 3.3, -10.5]);
+  mat4.translate(mMatrix, mMatrix, [-6, 0, -3.7]);
 
   const horizontalSpace = 6;
-  const verticalSpace = 6;
-  const lines = 2;
-  const itemsPerLine = 2;
+  mat4.translate(mMatrix, mMatrix, [horizontalSpace, 0, 0]);
 
-  for (let i = 0; i < lines; i++) {
-    mat4.translate(mMatrix, mMatrix, [horizontalSpace, 0, 0]);
-
-    desenharCubo();
-
-    mat4.translate(mMatrix, mMatrix, [horizontalSpace, 0, 0]);
-    desenharCubo();
-
-    mat4.translate(mMatrix, mMatrix, [
-      -itemsPerLine * horizontalSpace,
-      -verticalSpace,
-      0,
-    ]);
-  }
+  desenharCubo();
 }
 
 function desenharCubo() {
-  mPushMatrix();
-  mat4.rotate(mMatrix, mMatrix, degToRad(rCubo), [1, 1, 1]);
+  mat4.rotate(mMatrix, mMatrix, degToRad(xRot), [1, 0, 0]);
+  mat4.rotate(mMatrix, mMatrix, degToRad(yRot), [0, 1, 0]);
+  mat4.rotate(mMatrix, mMatrix, degToRad(zRot), [0, 0, 1]);
 
   drawBufferObject(
     cuboVertexPositionBuffer,
-    cuboVertexColorBuffer,
+    null,
     cuboVertexIndexBuffer,
-    gl.TRIANGLES
+    gl.TRIANGLES,
+    cuboVertexTextureCoordBuffer,
+    [caixaTextura]
   );
-
-  mPopMatrix();
 }
 
 let lastTimestamp = 0;
@@ -71,7 +59,9 @@ function animate() {
   if (lastTimestamp != 0) {
     var diffInSeconds = (currentTimestamp - lastTimestamp) / 1000.0;
 
-    rCubo += (60 * diffInSeconds) % 360.0;
+    zRot += (22 * diffInSeconds) % 360.0;
+    xRot += (15 * diffInSeconds) % 360.0;
+    yRot += (12 * diffInSeconds) % 360.0;
   }
 
   lastTimestamp = currentTimestamp;
@@ -81,9 +71,38 @@ function createCubo() {
   // eslint-disable-next-line no-undef
   cuboVertexPositionBuffer = createCuboVertexPositionBuffer();
   // eslint-disable-next-line no-undef
-  cuboVertexColorBuffer = createCuboVertexColorBuffer();
-  // eslint-disable-next-line no-undef
   cuboVertexIndexBuffer = createCuboVertexIndexBuffer();
   // eslint-disable-next-line no-undef
   cuboVertexTextureCoordBuffer = createCuboVertexTextureCoordBuffer();
+}
+
+function iniciarTextura() {
+  caixaTextura = gl.createTexture();
+  caixaTextura.image = new Image();
+  // predioTextura.crossOrigin.image = "anonymous"; // ask for CORS permission();
+
+  caixaTextura.image.onload = function () {
+    tratarTextura(caixaTextura);
+  };
+  caixaTextura.image.src = "caixa.gif";
+  shaderProgram.samplerUniform = gl.getUniformLocation(
+    shaderProgram,
+    "uSampler"
+  );
+}
+
+function tratarTextura(textura) {
+  gl.bindTexture(gl.TEXTURE_2D, textura);
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
+  gl.texImage2D(
+    gl.TEXTURE_2D,
+    0,
+    gl.RGBA,
+    gl.RGBA,
+    gl.UNSIGNED_BYTE,
+    textura.image
+  );
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+  gl.bindTexture(gl.TEXTURE_2D, null);
 }
