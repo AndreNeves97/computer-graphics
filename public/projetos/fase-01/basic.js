@@ -4,6 +4,10 @@ $(function () {
 
 function iniciaWebGL() {
   var canvas = $("#canvas-webgl")[0];
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight - 50;
+
   iniciarGL(canvas);
   iniciarShaders();
 
