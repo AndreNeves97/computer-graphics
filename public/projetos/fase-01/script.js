@@ -8,8 +8,12 @@ var xVelo = 0;
 var yRot = 0;
 var yVelo = 0;
 
-var z = -5;
+let mouseRotationX = window.innerWidth / 2;
+let mouseRotationY = window.innerHeight / 2;
 
+var z = -7;
+
+const handledKeys = [33, 34, 37, 39, 38, 40];
 var teclasPressionadas = {};
 
 const texturesImgs = [
@@ -29,6 +33,7 @@ document.addEventListener("afterPrepareWebGl", () => {
 
   document.onkeydown = eventoTeclaPress;
   document.onkeyup = eventoTeclaSolta;
+  document.onmousemove = handleMouseMove;
 
   tick();
 });
@@ -78,13 +83,23 @@ function tratarTeclado() {
 }
 
 function desenharCena() {
-  mat4.translate(mMatrix, mMatrix, [0.0, 0.0, z]);
+  mat4.translate(mMatrix, mMatrix, [0, 0, z - 2]);
+
+  mat4.rotate(mMatrix, mMatrix, degToRad(xRot), [0, 1, 0]);
+  mat4.rotate(mMatrix, mMatrix, degToRad(yRot), [1, 0, 0]);
+
+  mat4.translate(mMatrix, mMatrix, [-3, 0, 0]);
+  desenharCubo();
+
+  mat4.translate(mMatrix, mMatrix, [3, 0, 0]);
+  desenharCubo();
+
+  mat4.translate(mMatrix, mMatrix, [3, 0, 0]);
   desenharCubo();
 }
 
 function desenharCubo() {
-  mat4.rotate(mMatrix, mMatrix, degToRad(xRot), [1, 0, 0]);
-  mat4.rotate(mMatrix, mMatrix, degToRad(yRot), [0, 1, 0]);
+  mPushMatrix();
 
   drawBufferObject(
     cuboVertexPositionBuffer,
@@ -94,20 +109,15 @@ function desenharCubo() {
     cuboVertexTextureCoordBuffer,
     textures[0]
   );
+
+  mPopMatrix();
 }
 
-let lastTimestamp = 0;
 function animate() {
-  var currentTimestamp = new Date().getTime();
+  const maxRange = 120;
 
-  if (lastTimestamp != 0) {
-    var diffInSeconds = (currentTimestamp - lastTimestamp) / 1000.0;
-
-    xRot += (xVelo * diffInSeconds) % 360.0;
-    yRot += (yVelo * diffInSeconds) % 360.0;
-  }
-
-  lastTimestamp = currentTimestamp;
+  xRot = (mouseRotationX / window.innerWidth) * maxRange - maxRange / 2;
+  yRot = (mouseRotationY / window.innerHeight) * maxRange - maxRange / 2;
 }
 
 function createCubo() {
@@ -129,6 +139,11 @@ function eventoTeclaPress(evento) {
 
 function eventoTeclaSolta(evento) {
   teclasPressionadas[evento.keyCode] = false;
+}
+
+function handleMouseMove(event) {
+  mouseRotationX = event.clientX;
+  mouseRotationY = event.clientY;
 }
 
 function initTextures(texturesImgs) {
