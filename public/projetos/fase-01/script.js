@@ -2,18 +2,16 @@ let cuboVertexPositionBuffer;
 let cuboVertexIndexBuffer;
 var cuboVertexTextureCoordBuffer;
 
-var xRot = 0;
-var xVelo = 0;
+const maxRotationRange = 90;
 
-var yRot = 0;
-var yVelo = 0;
+let mouseRotationX = 0;
+let mouseRotationY = 0;
 
-let mouseRotationX = window.innerWidth / 2;
-let mouseRotationY = window.innerHeight / 2;
+let camX = 0;
+let camY = 0;
+let camZ = -9;
 
-var z = -7;
-
-const handledKeys = [33, 34, 37, 39, 38, 40];
+const handledKeys = [33, 34, 37, 39, 38, 40, 65, 68, 83, 87];
 var teclasPressionadas = {};
 
 const texturesImgs = [
@@ -46,47 +44,59 @@ function iniciarAmbiente() {
 function tick() {
   requestAnimFrame(tick);
   prepareScene();
-  tratarTeclado();
+  handleKeyboardMovement();
   desenharCena();
   animate();
 }
 
-function tratarTeclado() {
-  if (teclasPressionadas[33]) {
-    // Page Up
-    z += 0.05;
-  }
-  if (teclasPressionadas[34]) {
-    // Page Down
-    z -= 0.05;
-  }
-  if (teclasPressionadas[37]) {
-    // Esquerda
-    if (yVelo >= 1) {
-      yVelo -= 1;
+function handleKeyboardMovement() {
+  const symmetricRotationRange = maxRotationRange / 2;
+
+  const velocityFactor = 0.15;
+
+  const rotationVelocityFactor =
+    (1.1 * velocityFactor) / symmetricRotationRange;
+
+  const keyActions = {
+    // page up
+    33: () => (camY -= velocityFactor),
+
+    // page down
+    34: () => (camY += velocityFactor),
+
+    // a
+    65: () => (camX += velocityFactor),
+
+    // d
+    68: () => (camX -= velocityFactor),
+
+    // w
+    87: () => {
+      camZ += velocityFactor;
+      camX -= mouseRotationX * rotationVelocityFactor;
+      camY += mouseRotationY * rotationVelocityFactor;
+    },
+
+    // s
+    83: () => {
+      camZ -= velocityFactor;
+      camX += mouseRotationX * rotationVelocityFactor;
+      camY -= mouseRotationY * rotationVelocityFactor;
+    },
+  };
+
+  Object.entries(keyActions).forEach(([keyCode, fn]) => {
+    if (teclasPressionadas[keyCode]) {
+      fn();
     }
-  }
-  if (teclasPressionadas[39]) {
-    // Direita
-    yVelo += 1;
-  }
-  if (teclasPressionadas[38]) {
-    // Cima
-    xVelo += 1;
-  }
-  if (teclasPressionadas[40]) {
-    // Baixo
-    if (xVelo >= 1) {
-      xVelo -= 1;
-    }
-  }
+  });
 }
 
 function desenharCena() {
-  mat4.translate(mMatrix, mMatrix, [0, 0, z - 2]);
+  mat4.translate(mMatrix, mMatrix, [camX, camY, camZ]);
 
-  mat4.rotate(mMatrix, mMatrix, degToRad(xRot), [0, 1, 0]);
-  mat4.rotate(mMatrix, mMatrix, degToRad(yRot), [1, 0, 0]);
+  mat4.rotate(vMatrix, vMatrix, degToRad(mouseRotationX), [0, 1, 0]);
+  mat4.rotate(vMatrix, vMatrix, degToRad(mouseRotationY), [1, 0, 0]);
 
   mat4.translate(mMatrix, mMatrix, [-3, 0, 0]);
   desenharCubo();
@@ -113,12 +123,7 @@ function desenharCubo() {
   mPopMatrix();
 }
 
-function animate() {
-  const maxRange = 120;
-
-  xRot = (mouseRotationX / window.innerWidth) * maxRange - maxRange / 2;
-  yRot = (mouseRotationY / window.innerHeight) * maxRange - maxRange / 2;
-}
+function animate() {}
 
 function createCubo() {
   // eslint-disable-next-line no-undef
@@ -142,8 +147,17 @@ function eventoTeclaSolta(evento) {
 }
 
 function handleMouseMove(event) {
-  mouseRotationX = event.clientX;
-  mouseRotationY = event.clientY;
+  defineCamRotation(event.clientX, event.clientY);
+}
+
+function defineCamRotation(mousePositionX, mousePositionY) {
+  mouseRotationX =
+    (mousePositionX / window.innerWidth) * maxRotationRange -
+    maxRotationRange / 2;
+
+  mouseRotationY =
+    (mousePositionY / window.innerHeight) * maxRotationRange -
+    maxRotationRange / 2;
 }
 
 function initTextures(texturesImgs) {
