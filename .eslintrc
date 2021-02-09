@@ -12,8 +12,8 @@
   "globals": {
     "$": false,
     "gl": false,
-    "canvas": false,
     "shaderProgram": false,
+    "initWebGL": false,
     "vec3": false,
     "mat4": false,
     "createBuffer": false,

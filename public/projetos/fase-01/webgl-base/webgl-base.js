@@ -1,25 +1,20 @@
-$(function () {
-  initWebGL();
-});
-
 let gl;
-let canvas;
 let shaderProgram;
 
-function initWebGL() {
-  canvas = $("#canvas-webgl")[0];
+let mMatrix;
+let vMatrix;
+let pMatrix;
 
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight - 50;
+let mMatrixPilha = [];
 
-  iniciarGL();
+// eslint-disable-next-line no-unused-vars
+function initWebGL(canvas) {
+  iniciarGL(canvas);
   initShaderProgram();
   initShaders();
-
-  document.dispatchEvent(new Event("afterPrepareWebGl"));
 }
 
-function iniciarGL() {
+function iniciarGL(canvas) {
   mMatrix = mat4.create();
   vMatrix = mat4.create();
   pMatrix = mat4.create();
@@ -120,4 +115,18 @@ function getShader(gl, id) {
   }
 
   return shader;
+}
+
+// eslint-disable-next-line no-unused-vars
+function mPushMatrix() {
+  var copy = mat4.clone(mMatrix);
+  mMatrixPilha.push(copy);
+}
+
+// eslint-disable-next-line no-unused-vars
+function mPopMatrix() {
+  if (mMatrixPilha.length == 0) {
+    throw "inválido popMatrix!";
+  }
+  mMatrix = mMatrixPilha.pop();
 }
