@@ -12,6 +12,7 @@
   "globals": {
     "$": false,
     "gl": false,
+    "canvas": false,
     "shaderProgram": false,
     "vec3": false,
     "mat4": false,
