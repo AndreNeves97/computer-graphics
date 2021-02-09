@@ -15,8 +15,11 @@ function initWebGL(canvas) {
 }
 
 function iniciarGL(canvas) {
+  // eslint-disable-next-line no-unused-vars
   mMatrix = mat4.create();
+  // eslint-disable-next-line no-unused-vars
   vMatrix = mat4.create();
+  // eslint-disable-next-line no-unused-vars
   pMatrix = mat4.create();
 
   try {
