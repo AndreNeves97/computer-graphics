@@ -5,7 +5,7 @@ var cuboVertexTextureCoordBuffer;
 let canvasWidth;
 let canvasHeight;
 
-const maxRotationRangeX = degToRad(180);
+const maxRotationRangeX = degToRad(360);
 const maxRotationRangeY = degToRad(180);
 
 let camX = 0;
@@ -16,10 +16,10 @@ let camRotationX = 0;
 let camRotationY = 0;
 let camRotationZ = 0;
 
-let rotationFactorX = 0;
-let rotationFactorY = 0;
-let absRotationFactorX = 0;
-let absRotationFactorY = 0;
+let sinRotationX = 0;
+let sinRotationY = 0;
+let cosRotationX = 1;
+let cosRotationY = 1;
 
 const handledKeys = [33, 34, 37, 39, 38, 40, 65, 68, 83, 87];
 var teclasPressionadas = {};
@@ -76,30 +76,28 @@ function handleKeyboardMovement() {
 
     // a
     65: () => {
-      camX += velocityFactor * (1 - absRotationFactorX);
-      camZ += velocityFactor * rotationFactorX;
+      camX += velocityFactor * cosRotationX;
+      camZ += velocityFactor * sinRotationX;
     },
 
     // d
     68: () => {
-      camX -= velocityFactor * (1 - absRotationFactorX);
-      camZ -= velocityFactor * rotationFactorX;
+      camX -= velocityFactor * cosRotationX;
+      camZ -= velocityFactor * sinRotationX;
     },
 
     // w
     87: () => {
-      camZ +=
-        velocityFactor * (1 - absRotationFactorX) * (1 - absRotationFactorY);
-      camX -= velocityFactor * rotationFactorX;
-      camY += velocityFactor * rotationFactorY;
+      camX -= velocityFactor * sinRotationX;
+      camY += velocityFactor * sinRotationY;
+      camZ += velocityFactor * cosRotationX * cosRotationY;
     },
 
     // s
     83: () => {
-      camZ -=
-        velocityFactor * (1 - absRotationFactorX) * (1 - absRotationFactorY);
-      camX += velocityFactor * rotationFactorX;
-      camY -= velocityFactor * rotationFactorY;
+      camX += velocityFactor * sinRotationX;
+      camY -= velocityFactor * sinRotationY;
+      camZ -= velocityFactor * cosRotationX * cosRotationY;
     },
   };
 
@@ -186,15 +184,15 @@ function defineCamRotation(
   const mouseRotationY =
     (mousePositionY / objectHeight) * maxRotationRangeY - maxRotationRangeY / 2;
 
-  rotationFactorX = Math.sin(mouseRotationX);
-  rotationFactorY = Math.sin(mouseRotationY);
+  sinRotationX = Math.sin(mouseRotationX);
+  sinRotationY = Math.sin(mouseRotationY);
 
-  absRotationFactorX = Math.abs(rotationFactorX);
-  absRotationFactorY = Math.abs(rotationFactorY);
+  cosRotationX = Math.cos(mouseRotationX);
+  cosRotationY = Math.cos(mouseRotationY);
 
   camRotationX = mouseRotationX;
-  camRotationY = mouseRotationY * (1 - absRotationFactorX);
-  camRotationZ = mouseRotationY * rotationFactorX;
+  camRotationY = mouseRotationY * cosRotationX;
+  camRotationZ = mouseRotationY * sinRotationX;
 }
 
 function initTextures(texturesImgs) {
