@@ -183,6 +183,12 @@ function tratarTextura(texturas) {
 }
 
 function eventoTeclaPress(evento) {
+  const keys = [33, 34, 37, 39, 38, 40];
+
+  if (keys.includes(evento.keyCode)) {
+    evento.preventDefault();
+  }
+
   teclasPressionadas[evento.keyCode] = true;
 
   if (String.fromCharCode(evento.keyCode) == "F") filtro = (filtro + 1) % 3;
