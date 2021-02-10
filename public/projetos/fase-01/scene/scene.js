@@ -1,53 +1,63 @@
-let cuboVertexPositionBuffer;
-let cuboVertexIndexBuffer;
-let cuboVertexTextureCoordBuffer;
+const cube = new Cube();
+
+const texturesImgs = [
+  "scene/textures/texture-1.jpg",
+  "scene/textures/texture-2.jpg",
+  "scene/textures/texture-3.jpg",
+  "scene/textures/texture-4.jpg",
+  "scene/textures/texture-5.jpg",
+];
 
 let textures;
+let lastTimestamp = 0;
+let rotation = 0;
 
 // eslint-disable-next-line no-unused-vars
 function initSceneObjects() {
-  createCubo();
+  textures = texturesImgs.map((img) => initTexture(img));
 
-  // eslint-disable-next-line no-undef
-  textures = initTextures();
+  cube.createBuffers();
 }
 
 // eslint-disable-next-line no-unused-vars
 function tickDrawSceneObjects() {
-  mat4.translate(mMatrix, mMatrix, [-3, 0, 0]);
-  desenharCubo();
+  drawIsolatedObject(() =>
+    cube.draw([-4, 2, 0], [rotation, 0, 0], textures[0])
+  );
 
-  mat4.translate(mMatrix, mMatrix, [3, 0, 0]);
-  desenharCubo();
+  drawIsolatedObject(() =>
+    cube.draw([+0, 2, 0], [0, rotation, 0], textures[1])
+  );
 
-  mat4.translate(mMatrix, mMatrix, [3, 0, 0]);
-  desenharCubo();
+  drawIsolatedObject(() =>
+    cube.draw([+4, 2, 0], [0, 0, rotation], textures[2])
+  );
+
+  drawIsolatedObject(() =>
+    cube.draw([-4, -2, 0], [0, 0, rotation], textures[3])
+  );
+
+  drawIsolatedObject(() =>
+    cube.draw([4, -2, 0], [0, 0, rotation], textures[4])
+  );
 
   animate();
 }
 
-function desenharCubo() {
+function drawIsolatedObject(drawFn) {
   mPushMatrix();
-
-  drawBufferObject(
-    cuboVertexPositionBuffer,
-    null,
-    cuboVertexIndexBuffer,
-    gl.TRIANGLES,
-    cuboVertexTextureCoordBuffer,
-    textures[0]
-  );
-
+  drawFn();
   mPopMatrix();
 }
 
-function animate() {}
+function animate() {
+  var currentTimestamp = new Date().getTime();
 
-function createCubo() {
-  // eslint-disable-next-line no-undef
-  cuboVertexPositionBuffer = createCuboVertexPositionBuffer();
-  // eslint-disable-next-line no-undef
-  cuboVertexIndexBuffer = createCuboVertexIndexBuffer();
-  // eslint-disable-next-line no-undef
-  cuboVertexTextureCoordBuffer = createCuboVertexTextureCoordBuffer();
+  if (lastTimestamp != 0) {
+    var diffInSeconds = (currentTimestamp - lastTimestamp) / 1000.0;
+
+    rotation += (90 * diffInSeconds) % 360.0;
+  }
+
+  lastTimestamp = currentTimestamp;
 }

@@ -8,10 +8,7 @@ function init() {
   canvas.height = window.innerHeight - 50;
 
   initWebGL(canvas);
-
   iniciarAmbiente();
-
-  // eslint-disable-next-line no-undef
   initSceneObjects();
   tick();
 }
@@ -24,8 +21,6 @@ function iniciarAmbiente() {
 function tick() {
   requestAnimFrame(tick);
   prepareScene();
-
-  // eslint-disable-next-line no-undef
   tickKeyboardMovement();
   tickDrawScene();
 }
