@@ -2,6 +2,7 @@ $(init);
 
 let canvas;
 
+const webGLBase = new WebGLBase();
 const cameraControl = new CameraControl();
 
 function init() {
@@ -9,7 +10,7 @@ function init() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight - 50;
 
-  initWebGL(canvas);
+  webGLBase.initWebGL(canvas);
   iniciarAmbiente();
   initSceneObjects();
   tick();
@@ -43,6 +44,5 @@ function tickDrawScene() {
   mat4.rotate(vMatrix, vMatrix, camRotationY, [1, 0, 0]);
   mat4.rotate(vMatrix, vMatrix, camRotationZ, [0, 0, 1]);
 
-  // eslint-disable-next-line no-undef
   tickDrawSceneObjects();
 }

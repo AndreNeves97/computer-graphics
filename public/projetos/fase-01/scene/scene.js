@@ -12,6 +12,8 @@ let textures;
 let lastTimestamp = 0;
 let rotation = 0;
 
+let mMatrixStack = [];
+
 // eslint-disable-next-line no-unused-vars
 function initSceneObjects() {
   textures = texturesImgs.map((img) => initTexture(img));
@@ -48,6 +50,18 @@ function drawIsolatedObject(drawFn) {
   mPushMatrix();
   drawFn();
   mPopMatrix();
+}
+
+function mPushMatrix() {
+  var copy = mat4.clone(mMatrix);
+  mMatrixStack.push(copy);
+}
+
+function mPopMatrix() {
+  if (mMatrixStack.length == 0) {
+    throw "inválido popMatrix!";
+  }
+  mMatrix = mMatrixStack.pop();
 }
 
 function animate() {
