@@ -9,13 +9,14 @@ function Main() {
 
   const webGLBase = new WebGLBase(canvas);
   const cameraControl = new CameraControl(canvas);
+  const scene = new Scene();
 
   init();
 
   function init() {
     webGLBase.initWebGL();
     initEnvironment();
-    initSceneObjects();
+    scene.initSceneObjects();
     tick();
   }
 
@@ -47,6 +48,6 @@ function Main() {
     mat4.rotate(vMatrix, vMatrix, camRotationY, [1, 0, 0]);
     mat4.rotate(vMatrix, vMatrix, camRotationZ, [0, 0, 1]);
 
-    tickDrawSceneObjects();
+    scene.tickDrawSceneObjects();
   }
 }
