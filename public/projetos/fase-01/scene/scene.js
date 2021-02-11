@@ -14,8 +14,6 @@ function Scene() {
   let lastTimestamp = 0;
   let rotation = 0;
 
-  let mMatrixStack = [];
-
   return {
     initSceneObjects,
     tickDrawSceneObjects,
@@ -23,38 +21,16 @@ function Scene() {
 
   function initSceneObjects() {
     textures = texturesImgs.map((img) => initTexture(img));
-
-    cube.createBuffers();
   }
 
   function tickDrawSceneObjects() {
-    drawIsolatedObject(() =>
-      cube.draw([-4, 2, 0], [rotation, 0, 0], textures[0])
-    );
-
-    drawIsolatedObject(() =>
-      cube.draw([+0, 2, 0], [0, rotation, 0], textures[1])
-    );
-
-    drawIsolatedObject(() =>
-      cube.draw([+4, 2, 0], [0, 0, rotation], textures[2])
-    );
-
-    drawIsolatedObject(() =>
-      cube.draw([-4, -2, 0], [0, 0, rotation], textures[3])
-    );
-
-    drawIsolatedObject(() =>
-      cube.draw([4, -2, 0], [0, 0, rotation], textures[4])
-    );
+    cube.drawIsolated([-4, 2, 0], [rotation, 0, 0], textures[0]);
+    cube.drawIsolated([+0, 2, 0], [0, rotation, 0], textures[1]);
+    cube.drawIsolated([+4, 2, 0], [0, 0, rotation], textures[2]);
+    cube.drawIsolated([-4, -2, 0], [0, 0, rotation], textures[3]);
+    cube.drawIsolated([4, -2, 0], [0, 0, rotation], textures[4]);
 
     animate();
-  }
-
-  function drawIsolatedObject(drawFn) {
-    mPushMatrix();
-    drawFn();
-    mPopMatrix();
   }
 
   function animate() {
@@ -67,17 +43,5 @@ function Scene() {
     }
 
     lastTimestamp = currentTimestamp;
-  }
-
-  function mPushMatrix() {
-    var copy = mat4.clone(mMatrix);
-    mMatrixStack.push(copy);
-  }
-
-  function mPopMatrix() {
-    if (mMatrixStack.length == 0) {
-      throw "inválido popMatrix!";
-    }
-    mMatrix = mMatrixStack.pop();
   }
 }

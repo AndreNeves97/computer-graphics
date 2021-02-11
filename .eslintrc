@@ -29,6 +29,7 @@
     "Cube": false,
     "WebGLFunctions": false,
     "Scene": false,
+    "SceneObject": false,
     "tickKeyboardMovement": false,
     "initTexture": false,
     "requestAnimFrame": false,

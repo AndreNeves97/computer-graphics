@@ -8,17 +8,14 @@ function Main() {
   canvas.height = window.innerHeight - 50;
 
   const webGLBase = new WebGLBase(canvas);
+  webGLBase.initWebGL();
+
   const cameraControl = new CameraControl(canvas);
   const scene = new Scene();
 
-  init();
-
-  function init() {
-    webGLBase.initWebGL();
-    initEnvironment();
-    scene.initSceneObjects();
-    tick();
-  }
+  initEnvironment();
+  scene.initSceneObjects();
+  tick();
 
   function initEnvironment() {
     gl.clearColor(0.0, 0.0, 0.0, 1.0);

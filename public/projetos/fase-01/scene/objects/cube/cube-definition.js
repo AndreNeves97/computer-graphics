@@ -1,9 +1,9 @@
 // eslint-disable-next-line no-unused-vars
 function CubeDefinition() {
   return {
-    getVertexPositionBuffer: getVertexPositionBuffer,
-    getVertexIndexBuffer: getVertexIndexBuffer,
-    getVertexTextureCoordBuffer: getVertexTextureCoordBuffer,
+    vertexPositionBuffer: getVertexPositionBuffer(),
+    vertexIndexBuffer: getVertexIndexBuffer(),
+    vertexTextureCoordBuffer: getVertexTextureCoordBuffer(),
   };
 
   function getVertexPositionBuffer() {

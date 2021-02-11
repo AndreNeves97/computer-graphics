@@ -2,11 +2,15 @@
 const WebGLFunctions = new WebGLFunctionsDef();
 
 function WebGLFunctionsDef() {
+  let mMatrixStack = [];
+
   return {
     prepareScene,
     createBuffer,
     createIndexBuffer,
     drawBufferObject,
+    mPushMatrix,
+    mPopMatrix,
   };
 
   function prepareScene() {
@@ -119,5 +123,17 @@ function WebGLFunctionsDef() {
     gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
     gl.uniformMatrix4fv(shaderProgram.vMatrixUniform, false, vMatrix);
     gl.uniformMatrix4fv(shaderProgram.mMatrixUniform, false, mMatrix);
+  }
+
+  function mPushMatrix() {
+    var copy = mat4.clone(mMatrix);
+    mMatrixStack.push(copy);
+  }
+
+  function mPopMatrix() {
+    if (mMatrixStack.length == 0) {
+      throw "inválido popMatrix!";
+    }
+    mMatrix = mMatrixStack.pop();
   }
 }
