@@ -6,10 +6,10 @@ let vMatrix;
 let pMatrix;
 
 // eslint-disable-next-line no-unused-vars
-function WebGLBase() {
+function WebGLBase(canvas) {
   return { initWebGL };
 
-  function initWebGL(canvas) {
+  function initWebGL() {
     iniciarGL(canvas);
     initShaderProgram();
     initShaders();

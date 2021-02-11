@@ -7,7 +7,7 @@ function CubeDefinition() {
   };
 
   function getVertexPositionBuffer() {
-    return createBuffer([
+    return WebGLFunctions.createBuffer([
       // Frente
       [-1, -1, 1],
       [1, -1, 1],
@@ -61,11 +61,13 @@ function CubeDefinition() {
       indexVector.push(ref + 3);
     }
 
-    return createIndexBuffer(indexVector.map((value) => [value]));
+    return WebGLFunctions.createIndexBuffer(
+      indexVector.map((value) => [value])
+    );
   }
 
   function getVertexTextureCoordBuffer() {
-    return createBuffer([
+    return WebGLFunctions.createBuffer([
       // Frente
       [0.0, 0.0],
       [1.0, 0.0],

@@ -1,48 +1,52 @@
-$(init);
+$(() => {
+  new Main();
+});
 
-let canvas;
-
-const webGLBase = new WebGLBase();
-const cameraControl = new CameraControl();
-
-function init() {
-  canvas = $("#canvas-webgl")[0];
+function Main() {
+  const canvas = $("#canvas-webgl")[0];
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight - 50;
 
-  webGLBase.initWebGL(canvas);
-  iniciarAmbiente();
-  initSceneObjects();
-  tick();
-}
+  const webGLBase = new WebGLBase(canvas);
+  const cameraControl = new CameraControl(canvas);
 
-function iniciarAmbiente() {
-  gl.clearColor(0.0, 0.0, 0.0, 1.0);
-  gl.enable(gl.DEPTH_TEST);
-}
+  init();
 
-function tick() {
-  requestAnimFrame(tick);
-  prepareScene();
-  cameraControl.tickKeyboardMovement();
-  tickDrawScene();
-}
+  function init() {
+    webGLBase.initWebGL();
+    initEnvironment();
+    initSceneObjects();
+    tick();
+  }
 
-function tickDrawScene() {
-  const {
-    camX,
-    camY,
-    camZ,
-    camRotationX,
-    camRotationY,
-    camRotationZ,
-  } = cameraControl.getCamControlValues();
+  function initEnvironment() {
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    gl.enable(gl.DEPTH_TEST);
+  }
 
-  mat4.translate(mMatrix, mMatrix, [camX, camY, camZ]);
+  function tick() {
+    requestAnimFrame(tick);
+    WebGLFunctions.prepareScene();
+    cameraControl.tickKeyboardMovement();
+    tickDrawScene();
+  }
 
-  mat4.rotate(vMatrix, vMatrix, camRotationX, [0, 1, 0]);
-  mat4.rotate(vMatrix, vMatrix, camRotationY, [1, 0, 0]);
-  mat4.rotate(vMatrix, vMatrix, camRotationZ, [0, 0, 1]);
+  function tickDrawScene() {
+    const {
+      camX,
+      camY,
+      camZ,
+      camRotationX,
+      camRotationY,
+      camRotationZ,
+    } = cameraControl.getCamControlValues();
 
-  tickDrawSceneObjects();
+    mat4.translate(mMatrix, mMatrix, [camX, camY, camZ]);
+
+    mat4.rotate(vMatrix, vMatrix, camRotationX, [0, 1, 0]);
+    mat4.rotate(vMatrix, vMatrix, camRotationY, [1, 0, 0]);
+    mat4.rotate(vMatrix, vMatrix, camRotationZ, [0, 0, 1]);
+
+    tickDrawSceneObjects();
+  }
 }

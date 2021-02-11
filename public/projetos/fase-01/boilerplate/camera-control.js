@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-function CameraControl() {
+function CameraControl(canvas) {
   const maxRotationRangeX = degToRad(360);
   const maxRotationRangeY = degToRad(180);
 
@@ -80,7 +80,6 @@ function CameraControl() {
   }
 
   function handleMouseMove(event) {
-    // eslint-disable-next-line no-undef
     const { width, height } = canvas;
 
     const canvasWidth = width;

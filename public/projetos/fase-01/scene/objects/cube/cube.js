@@ -22,7 +22,7 @@ function Cube() {
     executeTranslations([x, y, z]);
     executeRotations([rotX, rotY, rotZ]);
 
-    drawBufferObject(
+    WebGLFunctions.drawBufferObject(
       cuboVertexPositionBuffer,
       null,
       cuboVertexIndexBuffer,
