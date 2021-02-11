@@ -2,6 +2,8 @@ $(init);
 
 let canvas;
 
+const cameraControl = new CameraControl();
+
 function init() {
   canvas = $("#canvas-webgl")[0];
   canvas.width = window.innerWidth;
@@ -21,7 +23,7 @@ function iniciarAmbiente() {
 function tick() {
   requestAnimFrame(tick);
   prepareScene();
-  tickKeyboardMovement();
+  cameraControl.tickKeyboardMovement();
   tickDrawScene();
 }
 
@@ -33,8 +35,7 @@ function tickDrawScene() {
     camRotationX,
     camRotationY,
     camRotationZ,
-    // eslint-disable-next-line no-undef
-  } = getCamControlValues();
+  } = cameraControl.getCamControlValues();
 
   mat4.translate(mMatrix, mMatrix, [camX, camY, camZ]);
 
