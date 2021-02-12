@@ -27,6 +27,8 @@
     "CameraControl": false,
     "CubeDefinition": false,
     "Cube": false,
+    "PyramidDefinition": false,
+    "Pyramid": false,
     "WebGLFunctions": false,
     "Scene": false,
     "SceneObject": false,

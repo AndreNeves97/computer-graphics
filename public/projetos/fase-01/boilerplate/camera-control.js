@@ -47,8 +47,8 @@ function CameraControl(canvas) {
   let cosRotationY = 1;
 
   let camX = 0;
-  let camY = 0;
-  let camZ = -9;
+  let camY = -10;
+  let camZ = -50;
 
   let camRotationX = 0;
   let camRotationY = 0;

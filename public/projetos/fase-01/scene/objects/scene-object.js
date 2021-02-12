@@ -14,10 +14,17 @@ function SceneObject(
     [x, y, z],
     [rotX, rotY, rotZ],
     [scaleX, scaleY, scaleZ],
-    texture
+    texture,
+    absoluteScaling = true
   ) {
     WebGLFunctions.mPushMatrix();
-    draw([x, y, z], [rotX, rotY, rotZ], [scaleX, scaleY, scaleZ], texture);
+    draw(
+      [x, y, z],
+      [rotX, rotY, rotZ],
+      [scaleX, scaleY, scaleZ],
+      texture,
+      absoluteScaling
+    );
     WebGLFunctions.mPopMatrix();
   }
 
@@ -25,9 +32,15 @@ function SceneObject(
     [x, y, z],
     [rotX, rotY, rotZ],
     [scaleX, scaleY, scaleZ],
-    texture
+    texture,
+    absoluteScaling = true
   ) {
     executeTranslations([x, y, z]);
+
+    if (absoluteScaling) {
+      executeTranslations([scaleX, scaleY, scaleZ]);
+    }
+
     executeRotations([rotX, rotY, rotZ]);
 
     WebGLFunctions.mPushMatrix();
