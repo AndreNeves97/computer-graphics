@@ -24,11 +24,12 @@ function Scene() {
   }
 
   function tickDrawSceneObjects() {
-    cube.drawIsolated([-4, 2, 0], [rotation, 0, 0], textures[0]);
-    cube.drawIsolated([+0, 2, 0], [0, rotation, 0], textures[1]);
-    cube.drawIsolated([+4, 2, 0], [0, 0, rotation], textures[2]);
-    cube.drawIsolated([-4, -2, 0], [0, 0, rotation], textures[3]);
-    cube.drawIsolated([4, -2, 0], [0, 0, rotation], textures[4]);
+    cube.drawIsolated([-4, 2, 0], [rotation, 0, 0], [2, 1, 1], textures[0]);
+    cube.drawIsolated([+4, 2, 0], [0, rotation, 0], [1, 1, 2], textures[1]);
+
+    cube.draw([0, -1, 0], [0, rotation, 0], [2, 0.5, 2], textures[2]);
+    cube.drawIsolated([-4, -2, 0], [rotation, 0, 0], [2, 1, 1], textures[3]);
+    cube.drawIsolated([4, -2, 0], [rotation, 0, 0], [3, 1, 1], textures[4]);
 
     animate();
   }

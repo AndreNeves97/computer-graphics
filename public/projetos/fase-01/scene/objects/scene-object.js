@@ -10,15 +10,28 @@ function SceneObject(
     drawIsolated,
   };
 
-  function drawIsolated([x, y, z], [rotX, rotY, rotZ], texture) {
+  function drawIsolated(
+    [x, y, z],
+    [rotX, rotY, rotZ],
+    [scaleX, scaleY, scaleZ],
+    texture
+  ) {
     WebGLFunctions.mPushMatrix();
-    draw([x, y, z], [rotX, rotY, rotZ], texture);
+    draw([x, y, z], [rotX, rotY, rotZ], [scaleX, scaleY, scaleZ], texture);
     WebGLFunctions.mPopMatrix();
   }
 
-  function draw([x, y, z], [rotX, rotY, rotZ], texture) {
+  function draw(
+    [x, y, z],
+    [rotX, rotY, rotZ],
+    [scaleX, scaleY, scaleZ],
+    texture
+  ) {
     executeTranslations([x, y, z]);
     executeRotations([rotX, rotY, rotZ]);
+
+    WebGLFunctions.mPushMatrix();
+    mat4.scale(mMatrix, mMatrix, [scaleX, scaleY, scaleZ]);
 
     WebGLFunctions.drawBufferObject(
       vertexPositionBuffer,
@@ -28,6 +41,8 @@ function SceneObject(
       vertexTextureCoordBuffer,
       texture
     );
+
+    WebGLFunctions.mPopMatrix();
   }
 
   function executeTranslations([x, y, z]) {
