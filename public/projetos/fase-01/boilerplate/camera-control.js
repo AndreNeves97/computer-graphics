@@ -1,9 +1,9 @@
 // eslint-disable-next-line no-unused-vars
 function CameraControl(canvas) {
   const maxRotationRangeX = degToRad(360);
-  const maxRotationRangeY = degToRad(180);
+  const maxRotationRangeY = degToRad(360);
 
-  const velocityFactor = 0.15;
+  const velocityFactor = 0.65;
 
   const keyActions = {
     // page up
