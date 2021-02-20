@@ -24,8 +24,27 @@ function Scene() {
     textures = texturesImgs.map((img) => initTexture(img));
   }
 
+  function animate() {
+    var currentTimestamp = new Date().getTime();
+
+    if (lastTimestamp != 0) {
+      var diffInSeconds = (currentTimestamp - lastTimestamp) / 1000.0;
+
+      rotation += (60 * diffInSeconds) % 360.0;
+    }
+
+    lastTimestamp = currentTimestamp;
+  }
+
   function tickDrawSceneObjects() {
-    // floor
+    drawFloor();
+    drawPyramids();
+    drawCubes();
+
+    animate();
+  }
+
+  function drawFloor() {
     cube.drawIsolated(
       [1, -1, -40],
       [0, 0, 0],
@@ -33,7 +52,9 @@ function Scene() {
       textures[2],
       false
     );
+  }
 
+  function drawPyramids() {
     pyramid.drawIsolated([-20, 0, -100], [0, 0, 0], [30, 35, 30], textures[3]);
 
     pyramid.drawIsolated([-45, 0, -30], [0, 0, 0], [15, 20, 15], textures[1]);
@@ -45,38 +66,30 @@ function Scene() {
 
     pyramid.drawIsolated([-30, 0, 30], [0, 0, 0], [7, 9, 7], textures[1]);
     pyramid.drawIsolated([-7, 0, 30], [0, 0, 0], [7, 9, 7], textures[0]);
-
-    cube.drawIsolated([30, 7, 0], [rotation, 0, 0], [2, 1, 1], textures[0]);
-    cube.drawIsolated([38, 7, 0], [0, rotation, 0], [1, 1, 2], textures[1]);
-
-    cube.draw([34, 4, 0], [0, rotation, 0], [2, 0.5, 2], textures[0]);
-    cube.drawIsolated(
-      [-4, -2, 0],
-      [0, rotation, 0],
-      [1, 1, 1],
-      textures[3],
-      false
-    );
-    cube.drawIsolated(
-      [4, -2, 0],
-      [0, rotation, 0],
-      [1, 1, 1],
-      textures[4],
-      false
-    );
-
-    animate();
   }
 
-  function animate() {
-    var currentTimestamp = new Date().getTime();
+  function drawCubes() {
+    cube.draw(
+      [50, 60, -100],
+      [0, rotation * 0.8, 0],
+      [15, 15, 15],
+      textures[4]
+    );
 
-    if (lastTimestamp != 0) {
-      var diffInSeconds = (currentTimestamp - lastTimestamp) / 1000.0;
+    cube.drawIsolated(
+      [-30, 0, 0],
+      [rotation * 2, rotation * 0.6, rotation * 1.3],
+      [7, 7, 7],
+      textures[2],
+      false
+    );
 
-      rotation += (90 * diffInSeconds) % 360.0;
-    }
-
-    lastTimestamp = currentTimestamp;
+    cube.drawIsolated(
+      [30, 0, 0],
+      [rotation * 0.9, rotation * 0.6, rotation],
+      [7, 7, 7],
+      textures[0],
+      false
+    );
   }
 }
