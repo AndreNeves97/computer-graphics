@@ -3,7 +3,7 @@ function CameraControl(canvas) {
   const maxRotationRangeX = degToRad(360);
   const maxRotationRangeY = degToRad(360);
 
-  const velocityFactor = 0.65;
+  const velocityFactor = 2.5;
 
   const keyActions = {
     // page up
@@ -47,8 +47,8 @@ function CameraControl(canvas) {
   let cosRotationY = 1;
 
   let camX = 0;
-  let camY = -10;
-  let camZ = -50;
+  let camY = -30;
+  let camZ = -105;
 
   let camRotationX = 0;
   let camRotationY = 0;

@@ -20,7 +20,7 @@ function WebGLFunctionsDef() {
       45,
       gl.viewportWidth / gl.viewportHeight,
       0.1,
-      100.0,
+      500.0,
       pMatrix
     );
 
