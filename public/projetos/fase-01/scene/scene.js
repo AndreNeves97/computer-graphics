@@ -73,14 +73,14 @@ function Scene() {
       [50, 60, -100],
       [0, rotation * 0.8, 0],
       [15, 15, 15],
-      textures[4]
+      textures[0]
     );
 
     cube.drawIsolated(
       [-30, 0, 0],
       [rotation * 2, rotation * 0.6, rotation * 1.3],
       [7, 7, 7],
-      textures[2],
+      textures[1],
       false
     );
 
@@ -88,7 +88,7 @@ function Scene() {
       [30, 0, 0],
       [rotation * 0.9, rotation * 0.6, rotation],
       [7, 7, 7],
-      textures[0],
+      textures[1],
       false
     );
   }
